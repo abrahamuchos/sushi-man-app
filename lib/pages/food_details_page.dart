@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
 import 'package:sushi_man/components/button.dart';
 import 'package:sushi_man/models/food.dart';
+import 'package:sushi_man/models/shop.dart';
 import 'package:sushi_man/themes/colors.dart';
 
 class FoodDetailsPage extends StatefulWidget {
@@ -14,7 +17,7 @@ class FoodDetailsPage extends StatefulWidget {
 }
 
 class _FoodDetailsPageState extends State<FoodDetailsPage> {
-  int quantityCount = 0;
+  int quantityCount = 1;
 
   void incrementQuantity() {
     setState(() {
@@ -30,8 +33,44 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
     });
   }
 
-  void addToCart(){
+  void addToCart() {
+    if (quantityCount > 0) {
+      final shop = context.read<Shop>();
 
+      shop.addToCart(widget.food, quantityCount);
+
+      //Alert Dialog
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Enjoy!', style: TextStyle(fontSize: 20),),
+          content: RichText(
+            text: TextSpan(
+              style: TextStyle(fontSize: 18, color: Colors.black54),
+              children: [
+                TextSpan(text: 'Successfully your '),
+                TextSpan(
+                  text: widget.food.name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(text: '  was added to cart.'),
+              ],
+            ),
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  //One to remove dialog box. Pop again to previous screen
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.done))
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -164,10 +203,10 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                       color: Colors.white,
                       onPressed: () => decrementQuantity(),
                     ),
-                    Text(quantityCount.toString(), style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16
-                    ),),
+                    Text(
+                      quantityCount.toString(),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
                     IconButton(
                       icon: Icon(Icons.add),
                       iconSize: 24,
@@ -178,9 +217,11 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                 ),
               ],
             ),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             //CTA Add to cart
-            MyButton(text: 'Add To Cart', onTap: addToCart ),
+            MyButton(text: 'Add To Cart', onTap: addToCart),
           ],
         ),
       ),
