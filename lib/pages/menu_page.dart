@@ -17,7 +17,6 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-
   void navigateToFoodDetails(Food food) {
     final shop = context.read<Shop>();
     final foodMenu = shop.foodMenu;
@@ -133,6 +132,10 @@ class _MenuPageState extends State<MenuPage> {
         ),
       ),
       centerTitle: true,
+      actions: [IconButton(onPressed: () {
+        Navigator.pushNamed(context, '/cartpage');
+        },
+        icon: Icon(Icons.shopping_cart))],
     );
   }
 

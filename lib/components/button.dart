@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sushi_man/themes/colors.dart';
 
 class MyButton extends StatelessWidget {
   final String text;
   final void Function()? onTap;
+  final bool opacity;
 
-  const MyButton({super.key, required this.text, required this.onTap});
+  const MyButton(
+      {super.key,
+      required this.text,
+      required this.onTap, this.opacity = true});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +17,7 @@ class MyButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(109, 140, 94, 91),
+          color: opacity ? MyColors.secondary : MyColors.primary,
           borderRadius: BorderRadius.circular(40),
         ),
         child: Padding(
