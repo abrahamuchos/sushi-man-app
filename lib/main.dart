@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:sushi_man/models/shop.dart';
 import 'package:sushi_man/pages/intro_page.dart';
 import 'package:sushi_man/pages/menu_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => Shop(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,5 +28,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
