@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:sushi_man/models/shop.dart';
+import 'package:sushi_man/pages/cart_page.dart';
+import 'package:sushi_man/pages/intro_page.dart';
+import 'package:sushi_man/pages/menu_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => Shop(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,9 +21,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: Text('Hello World'),
+      home: IntroPage(),
+      routes: {
+        '/intropage': (context) => const IntroPage(),
+        '/menupage': (context) => const MenuPage(),
+        '/cartpage': (context) => const CartPage(),
+      },
     );
   }
 }
-
-
